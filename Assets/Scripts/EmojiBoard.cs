@@ -13,8 +13,6 @@ public class EmojiBoard : MonoBehaviour
     public GridLayoutGroup rightboard;
     void Start()
     {
-        float uppos = Mathf.NegativeInfinity;
-        float dwpos = Mathf.Infinity;
         foreach (var e in emojiSprites)
         {
             GameObject bp = Instantiate(buttonPrefab, rightboard.transform, false);
@@ -22,22 +20,7 @@ public class EmojiBoard : MonoBehaviour
             img.sprite = e;
             Button b = bp.GetComponent<Button>();
             b.onClick.AddListener(() => EmojiClicked(bp));
-            Vector3[] v = new Vector3[4];
-            img.rectTransform.GetWorldCorners(v);
-
-            Debug.LogFormat("{0} :: {1}", v[1], v[0]);
-            if (uppos < v[1].y)
-            {
-                uppos = v[1].y;
-            }
-            if (dwpos > v[0].y)
-            {
-                dwpos = v[0].y;
-            }
         }
-        
-        RectTransform rt = rightboard.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (uppos - dwpos));
     }
 
     private void EmojiClicked(GameObject go)
